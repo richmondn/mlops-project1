@@ -3,6 +3,15 @@ name: tf-gha-deploy-infra.yml
 on:
   #push:
   workflow_dispatch:
+    inputs:
+      TFAction:
+        description: 'Terraform Action'
+        type: choice
+        required: true
+        default: 'apply'
+        options:
+          - 'apply'
+          - 'destroy'
 env:
   config_env: "none"
 jobs:
@@ -25,14 +34,14 @@ jobs:
           echo "config-file=$config_env" >> $GITHUB_OUTPUT;
   get-config:
     needs: set-env-branch
-    uses: Azure/mlops-templates/.github/workflows/read-yaml.yml@main
+    uses: richmondn/mlops-templates/.github/workflows/read-yaml.yml@main
     with:
       file_name: ${{ needs.set-env-branch.outputs.config-file}}
   test-terraform-state-deployment:
     needs: [get-config, set-env-branch]
-    uses: Azure/mlops-templates/.github/workflows/tf-gha-install-terraform.yml@main
+    uses: richmondn/mlops-templates/.github/workflows/tf-gha-terraform-apply.yml@main
     with:
-      TFAction: "apply"
+      TFAction: ${{ inputs.TFAction }}
       dply_environment: ${{ needs.set-env-branch.outputs.config-file }}
       location: ${{ needs.get-config.outputs.location }}
       namespace: ${{ needs.get-config.outputs.namespace }}
