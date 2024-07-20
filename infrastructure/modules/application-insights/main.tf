@@ -2,8 +2,8 @@ resource "azurerm_log_analytics_workspace" "logwksp" {
   name                = "logwksp-${var.prefix}-${var.postfix}${var.env}"
   location            = var.location
   resource_group_name = var.rg_name
-  sku                 = "Free"
-  retention_in_days   = 7
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
 
   tags = var.tags
 }
