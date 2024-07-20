@@ -41,7 +41,7 @@ jobs:
     needs: [get-config, set-env-branch]
     uses: richmondn/mlops-templates/.github/workflows/tf-gha-install-terraform.yml@main
     with:
-      TFAction: "apply"
+      TFAction: ${{ inputs.TFAction }}
       dply_environment: ${{ needs.set-env-branch.outputs.config-file }}
       location: ${{ needs.get-config.outputs.location }}
       namespace: ${{ needs.get-config.outputs.namespace }}
