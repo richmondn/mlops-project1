@@ -50,7 +50,7 @@ jobs:
     uses: richmondn/mlops-templates/.github/workflows/create-compute.yml@main
     with:
       cluster_name: cpu-cluster
-      size: Standard_DS3_v2_Promo
+      size: Standard_D4as_v4
       min_instances: 0
       max_instances: 4
       cluster_tier: low_priority
